@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - Toko Online</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border: #475569;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
+
+        .login-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; width: 100%; max-width: 380px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        
+        .role-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .role-tab { flex: 1; padding: 8px; text-align: center; background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 0.85rem; color: var(--text-muted); font-weight: bold; }
+        .role-tab.active { background: var(--accent); color: var(--bg-main); border-color: var(--accent); }
+
+        .login-header { text-align: center; margin-bottom: 16px; }
+        .login-header h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 4px; }
+        .login-header p { font-size: 0.8rem; color: var(--text-muted); }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        .form-group input { width: 100%; padding: 10px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 4px; color: var(--text-main); font-size: 0.9rem; outline: none; }
+
+        .btn { width: 100%; background: var(--accent); color: var(--bg-main); font-weight: bold; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-top: 6px; }
+        .btn-guest { background: transparent; border: 1px dashed var(--border); color: var(--text-muted); margin-top: 8px; }
+        .btn-guest:hover { color: var(--text-main); border-color: var(--text-muted); }
+
+        .alert-box { padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; text-align: center; margin-bottom: 12px; display: none; }
+        .alert-error { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); color: var(--danger); }
+        .alert-success { background: rgba(34, 197, 94, 0.15); border: 1px solid var(--success); color: var(--success); }
+
+        .toggle-mode { font-size: 0.75rem; text-align: center; color: var(--accent); cursor: pointer; margin-top: 12px; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="role-tabs">
+            <div class="role-tab active" onclick="switchRole('pembeli')">🛒 Pembeli</div>
+            <div class="role-tab" onclick="switchRole('admin')">🔒 Admin</div>
+        </div>
+
+        <div id="alertBox" class="alert-box"></div>
+
+        <!-- HEADER PEMBELI -->
+        <div id="pembeliHeader" class="login-header">
+            <h2 id="pembeliTitle">Masuk Akun Pembeli</h2>
+            <p>Silakan login untuk mulai berbelanja</p>
+        </div>
+
+        <!-- HEADER ADMIN -->
+        <div id="adminHeader" class="login-header hidden">
+            <h2>Panel Login Admin</h2>
+            <p>Khusus pengelola dan penginput data toko</p>
+        </div>
+
+        <form id="authForm" onsubmit="return false;">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Masukkan username" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+
+            <button type="button" id="btnSubmit" class="btn">Masuk Toko</button>
+            
+            <div id="pembeliActions">
+                <button type="button" id="btnGuest" class="btn btn-guest">Masuk Tanpa Login (Tamu)</button>
+                <div class="toggle-mode" id="toggleReg">Belum punya akun? Daftar di sini</div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let currentRole = 'pembeli'; // 'pembeli' atau 'admin'
+        let isRegisterMode = false;
+
+        const ADMIN_USER = "admin";
+        const ADMIN_PASS = "admin123";
+
+        function showAlert(msg, isSuccess = false) {
+            const box = document.getElementById('alertBox');
+            box.className = `alert-box ${isSuccess ? 'alert-success' : 'alert-error'}`;
+            box.textContent = msg;
+            box.style.display = 'block';
+        }
+
+        function hideAlert() {
+            document.getElementById('alertBox').style.display = 'none';
+        }
+
+        function switchRole(role) {
+            currentRole = role;
+            isRegisterMode = false;
+            hideAlert();
+
+            document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+            if (role === 'pembeli') {
+                document.querySelectorAll('.role-tab')[0].classList.add('active');
+                document.getElementById('pembeliHeader').classList.remove('hidden');
+                document.getElementById('adminHeader').classList.add('hidden');
+                document.getElementById('pembeliActions').classList.remove('hidden');
+                document.getElementById('pembeliTitle').textContent = "Masuk Akun Pembeli";
+                document.getElementById('btnSubmit').textContent = "Masuk Toko";
+                document.getElementById('toggleReg').textContent = "Belum punya akun? Daftar di sini";
+            } else {
+                document.querySelectorAll('.role-tab')[1].classList.add('active');
+                document.getElementById('pembeliHeader').classList.add('hidden');
+                document.getElementById('adminHeader').classList.remove('hidden');
+                document.getElementById('pembeliActions').classList.add('hidden');
+                document.getElementById('btnSubmit').textContent = "Masuk Panel Admin";
+            }
+        }
+
+        document.getElementById('toggleReg').addEventListener('click', () => {
+            isRegisterMode = !isRegisterMode;
+            hideAlert();
+            if (isRegisterMode) {
+                document.getElementById('pembeliTitle').textContent = "Pendaftaran Pembeli";
+                document.getElementById('btnSubmit').textContent = "Buat Akun Baru";
+                document.getElementById('toggleReg').textContent = "Sudah punya akun? Login di sini";
+            } else {
+                document.getElementById('pembeliTitle').textContent = "Masuk Akun Pembeli";
+                document.getElementById('btnSubmit').textContent = "Masuk Toko";
+                document.getElementById('toggleReg').textContent = "Belum punya akun? Daftar di sini";
+            }
+        });
+
+        document.getElementById('btnSubmit').addEventListener('click', () => {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+
+            if (!user || !pass) {
+                showAlert("Mohon isi username dan password!");
+                return;
+            }
+
+            if (currentRole === 'admin') {
+                if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                    localStorage.setItem('tp_admin_session', 'true');
+                    window.location.href = 'admin.html';
+                } else {
+                    showAlert("Username/Password Admin Salah!");
+                }
+            } else {
+                let userList = JSON.parse(localStorage.getItem('tp_users')) || [];
+
+                if (isRegisterMode) {
+                    const exist = userList.find(u => u.username.toLowerCase() === user.toLowerCase());
+                    if (exist) {
+                        showAlert("Username sudah terdaftar! Gunakan username lain.");
+                        return;
+                    }
+
+                    userList.push({ username: user, password: pass });
+                    localStorage.setItem('tp_users', JSON.stringify(userList));
+                    localStorage.setItem('tp_user_session', user);
+                    
+                    showAlert("Akun berhasil dibuat! Dialihkan...", true);
+                    setTimeout(() => window.location.href = 'pembeli.html', 1000);
+                } else {
+                    const foundUser = userList.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
+                    if (foundUser) {
+                        localStorage.setItem('tp_user_session', foundUser.username);
+                        window.location.href = 'pembeli.html';
+                    } else {
+                        showAlert("Username atau Password pembeli salah!");
+                    }
+                }
+            }
+        });
+
+        document.getElementById('btnGuest').addEventListener('click', () => {
+            localStorage.setItem('tp_user_session', 'Tamu / Guest');
+            window.location.href = 'pembeli.html';
+        });
+    </script>
+</body>
+</html>
