@@ -59,7 +59,7 @@
         <!-- HEADER PEMBELI -->
         <div id="pembeliHeader" class="login-header">
             <h2 id="pembeliTitle">Masuk Akun Pembeli</h2>
-            <p>Silakan login untuk mulai berbelanja</p>
+            <p>Silakan isi username & password bebas untuk masuk</p>
         </div>
 
         <!-- HEADER ADMIN -->
@@ -82,7 +82,7 @@
             
             <div id="pembeliActions">
                 <button type="button" id="btnGuest" class="btn btn-guest">Masuk Tanpa Login (Tamu)</button>
-                <div class="toggle-mode" id="toggleReg">Belum punya akun? Daftar di sini</div>
+                <div class="toggle-mode" id="toggleReg">Atau daftar manual di sini</div>
             </div>
         </form>
     </div>
@@ -118,7 +118,7 @@
                 document.getElementById('pembeliActions').classList.remove('hidden');
                 document.getElementById('pembeliTitle').textContent = "Masuk Akun Pembeli";
                 document.getElementById('btnSubmit').textContent = "Masuk Toko";
-                document.getElementById('toggleReg').textContent = "Belum punya akun? Daftar di sini";
+                document.getElementById('toggleReg').textContent = "Atau daftar manual di sini";
             } else {
                 document.querySelectorAll('.role-tab')[1].classList.add('active');
                 document.getElementById('pembeliHeader').classList.add('hidden');
@@ -138,7 +138,7 @@
             } else {
                 document.getElementById('pembeliTitle').textContent = "Masuk Akun Pembeli";
                 document.getElementById('btnSubmit').textContent = "Masuk Toko";
-                document.getElementById('toggleReg').textContent = "Belum punya akun? Daftar di sini";
+                document.getElementById('toggleReg').textContent = "Atau daftar manual di sini";
             }
         });
 
@@ -175,12 +175,24 @@
                     showAlert("Akun berhasil dibuat! Dialihkan...", true);
                     setTimeout(() => window.location.href = 'pembeli.html', 1000);
                 } else {
-                    const foundUser = userList.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
+                    const foundUser = userList.find(u => u.username.toLowerCase() === user.toLowerCase());
+                    
                     if (foundUser) {
-                        localStorage.setItem('tp_user_session', foundUser.username);
-                        window.location.href = 'pembeli.html';
+                        // Jika akun sudah ada di LocalStorage, cocokkan password-nya
+                        if (foundUser.password === pass) {
+                            localStorage.setItem('tp_user_session', foundUser.username);
+                            window.location.href = 'pembeli.html';
+                        } else {
+                            showAlert("Password salah untuk username ini!");
+                        }
                     } else {
-                        showAlert("Username atau Password pembeli salah!");
+                        // OTOMATIS DAFTAR & LOGIN jika username belum pernah ada
+                        userList.push({ username: user, password: pass });
+                        localStorage.setItem('tp_users', JSON.stringify(userList));
+                        localStorage.setItem('tp_user_session', user);
+                        
+                        showAlert("Akun baru berhasil dibuat! Dialihkan...", true);
+                        setTimeout(() => window.location.href = 'pembeli.html', 800);
                     }
                 }
             }
