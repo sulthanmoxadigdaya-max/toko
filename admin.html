@@ -108,41 +108,73 @@
 
             <!-- SECTION DASHBOARD -->
             <section id="dashboard-section" class="content-section">
-                <div class="card-box" style="padding: 12px;">
-                    <h3 style="margin-bottom: 6px; font-size: 0.95rem;">Panel Dashboard Admin</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 12px; font-size: 0.8rem;">
-                        Kelola inventaris dan catat laporan pembukuan toko Anda.
+                <div class="card-box" style="padding: 16px;">
+                    <h3 style="margin-bottom: 8px; font-size: 1rem;">Panel Dashboard Admin</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.85rem;">
+                        Kelola inventaris dan catat laporan pembukuan toko Anda secara real-time.
                     </p>
                     
-                    <div class="form-grid" style="margin-bottom: 12px;">
-                        <div style="background: var(--bg-main); padding: 10px; border-radius: 6px; border-left: 3px solid var(--accent);">
+                    <div class="form-grid" style="margin-bottom: 16px;">
+                        <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent);">
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Total Jenis Barang</span>
-                            <div id="dashTotalBarang" style="font-weight: bold; color: var(--accent); font-size: 1.2rem; margin-top: 2px;">0</div>
+                            <div id="dashTotalBarang" style="font-weight: bold; color: var(--accent); font-size: 1.3rem; margin-top: 2px;">0</div>
                         </div>
-                        <div style="background: var(--bg-main); padding: 10px; border-radius: 6px; border-left: 3px solid var(--success);">
+                        <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border-left: 3px solid var(--success);">
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Total Pesanan Web</span>
-                            <div id="dashTotalPesanan" style="font-weight: bold; color: var(--success); font-size: 1.2rem; margin-top: 2px;">0</div>
+                            <div id="dashTotalPesanan" style="font-weight: bold; color: var(--success); font-size: 1.3rem; margin-top: 2px;">0</div>
                         </div>
                     </div>
 
-                    <h4 style="color: var(--text-muted); margin-bottom: 8px; font-size: 0.8rem;">Akses Fitur Cepat</h4>
-                    <div class="quick-action-grid">
+                    <h4 style="color: var(--text-muted); margin-bottom: 10px; font-size: 0.8rem;">Akses Fitur Cepat</h4>
+                    <div class="quick-action-grid" style="margin-bottom: 20px;">
                         <a href="#laporan-section" class="nav-link quick-action-card">
-                            <div style="font-size: 1.2rem;">📊</div>
-                            <div style="font-size: 0.75rem;">Laporan Keuangan</div>
+                            <div style="font-size: 1.3rem;">📊</div>
+                            <div style="font-size: 0.8rem;">Laporan Keuangan</div>
                         </a>
                         <a href="#input-section" class="nav-link quick-action-card">
-                            <div style="font-size: 1.2rem;">➕</div>
-                            <div style="font-size: 0.75rem;">Input Barang</div>
+                            <div style="font-size: 1.3rem;">➕</div>
+                            <div style="font-size: 0.8rem;">Input Barang</div>
                         </a>
                         <a href="#stok-section" class="nav-link quick-action-card">
-                            <div style="font-size: 1.2rem;">📦</div>
-                            <div style="font-size: 0.75rem;">Kelola Stok</div>
+                            <div style="font-size: 1.3rem;">📦</div>
+                            <div style="font-size: 0.8rem;">Kelola Stok</div>
                         </a>
                         <a href="#pesanan-section" class="nav-link quick-action-card">
-                            <div style="font-size: 1.2rem;">🛒</div>
-                            <div style="font-size: 0.75rem;">Pesanan Masuk</div>
+                            <div style="font-size: 1.3rem;">🛒</div>
+                            <div style="font-size: 0.8rem;">Pesanan Masuk</div>
                         </a>
+                    </div>
+
+                    <!-- ELEMEN TAMBAHAN BAGIAN BAWAH DASHBOARD -->
+                    <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">
+                        
+                        <!-- Widget 1: Tips Pengelolaan Toko Dinamis -->
+                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="font-size: 0.85rem; font-weight: bold; color: var(--accent);">💡 Tips Pengelolaan Toko</span>
+                                <span style="font-size: 0.7rem; color: var(--success); background: rgba(34, 197, 94, 0.1); padding: 2px 6px; border-radius: 4px;">Sistem Aktif</span>
+                            </div>
+                            <p id="quoteText" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; min-height: 48px;">
+                                "Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."
+                            </p>
+                            <div style="margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); border-top: 1px dashed var(--border); padding-top: 8px; display: flex; justify-content: space-between;">
+                                <span>Penyimpanan Lokal:</span>
+                                <strong style="color: var(--accent);">localStorage OK</strong>
+                            </div>
+                        </div>
+
+                        <!-- Widget 2: Mini-Game Canvas Interaktif -->
+                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border); text-align: center;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="font-size: 0.85rem; font-weight: bold; color: var(--accent);">🎮 Mini-Game Admin</span>
+                                <span id="gameScore" style="font-size: 0.75rem; color: var(--warning); font-weight: bold;">Skor: 0</span>
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">
+                                Gerakkan mouse/touch untuk menangkap koin!
+                            </p>
+                            <canvas id="miniGameCanvas" width="280" height="100" style="background: var(--bg-card); border-radius: 4px; border: 1px solid var(--border); cursor: pointer; max-width: 100%;"></canvas>
+                        </div>
+
                     </div>
                 </div>
             </section>
@@ -535,6 +567,76 @@
             `).join('');
         }
 
+        /* --- LOGIKA TAMBAHAN: TIPS DINAMIS & MINI-GAME --- */
+        const quotes = [
+            '"Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."',
+            '"Catat setiap pengeluaran sekecil apa pun untuk menjaga akurasi laporan laba/rugi toko."',
+            '"Produk dengan gambar yang jelas cenderung lebih cepat diminati oleh pembeli."',
+            '"Periksa menu Pesanan Masuk setiap hari agar pengiriman barang tidak tertunda."'
+        ];
+        let quoteIdx = 0;
+        setInterval(() => {
+            quoteIdx = (quoteIdx + 1) % quotes.length;
+            const qEl = document.getElementById('quoteText');
+            if (qEl) qEl.textContent = quotes[quoteIdx];
+        }, 6000);
+
+        // Logic Mini Game Canvas (Catch the Coin)
+        const canvas = document.getElementById('miniGameCanvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let score = 0;
+            let playerX = canvas.width / 2;
+            let coin = { x: Math.random() * (canvas.width - 20) + 10, y: 0, speed: 2 };
+
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                playerX = e.clientX - rect.left;
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                if (e.touches[0]) playerX = e.touches[0].clientX - rect.left;
+            });
+
+            function updateGame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Gambar Paddle Player
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillRect(playerX - 20, canvas.height - 12, 40, 8);
+
+                // Gambar Koin
+                ctx.fillStyle = '#f59e0b';
+                ctx.beginPath();
+                ctx.arc(coin.x, coin.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Gerakan Koin
+                coin.y += coin.speed;
+
+                // Cek Tangkapan
+                if (coin.y >= canvas.height - 12 && coin.x >= playerX - 25 && coin.x <= playerX + 25) {
+                    score += 10;
+                    document.getElementById('gameScore').textContent = 'Skor: ' + score;
+                    coin.y = 0;
+                    coin.x = Math.random() * (canvas.width - 20) + 10;
+                    coin.speed = Math.min(coin.speed + 0.2, 5);
+                }
+
+                // Reset jika koin jatuh
+                if (coin.y > canvas.height) {
+                    coin.y = 0;
+                    coin.x = Math.random() * (canvas.width - 20) + 10;
+                    coin.speed = 2;
+                }
+
+                requestAnimationFrame(updateGame);
+            }
+            updateGame();
+        }
+
+        // Initial render
         renderStok();
         renderPesanan();
         renderKeuangan();
