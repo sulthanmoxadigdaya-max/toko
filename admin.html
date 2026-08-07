@@ -55,16 +55,14 @@
         
         .btn-logout { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); margin: 16px; padding: 8px; border-radius: 4px; text-align: center; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
 
-        /* Grid Statistik Kunci Bersebelahan (Selalu 2 Kolom) */
+        /* Kunci Grid Stats 2 Kolom Sejajar */
         .stats-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
         .quick-action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .quick-action-card { background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; color: var(--text-main); text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
 
-        .comp-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-        .comp-card { background: var(--bg-main); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
-        .comp-title { font-size: 0.85rem; font-weight: bold; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .dashboard-grid-2col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
 
         .table-container { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
@@ -118,10 +116,10 @@
                 <div class="card-box" style="padding: 16px;">
                     <h3 style="margin-bottom: 8px; font-size: 1rem;">Panel Dashboard Admin</h3>
                     <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.85rem;">
-                        Kelola inventaris, catat laporan pembukuan toko, dan pelajari seluk-beluk komponen komputer.
+                        Gambaran umum operasional toko, grafik analisa keuangan, serta sebaran stok barang.
                     </p>
                     
-                    <!-- DUA KARTU STATISTIK: SELALU BERSEBELAHAN DI HP DAN DESKTOP -->
+                    <!-- 1. STATISTIK KUNCI (2 KOLOM SEJAJAR) -->
                     <div class="stats-grid-2col" style="margin-bottom: 16px;">
                         <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent);">
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Total Jenis Barang</span>
@@ -133,6 +131,7 @@
                         </div>
                     </div>
 
+                    <!-- 2. AKSES FITUR CEPAT -->
                     <h4 style="color: var(--text-muted); margin-bottom: 10px; font-size: 0.8rem;">Akses Fitur Cepat</h4>
                     <div class="quick-action-grid" style="margin-bottom: 20px;">
                         <a href="#laporan-section" class="nav-link quick-action-card">
@@ -153,105 +152,73 @@
                         </a>
                     </div>
 
-                    <!-- AREA TIPS & MINI GAME -->
-                    <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 16px; margin-bottom: 20px;">
-                        
+                    <!-- 3. GRAFIK-GRAFIK ANALISA UTAMA -->
+                    <div class="dashboard-grid-2col" style="margin-bottom: 20px;">
+                        <!-- Grafik 1: Perbandingan Keuangan -->
                         <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                                <span style="font-size: 0.85rem; font-weight: bold; color: var(--accent);">💡 Tips Pengelolaan Toko</span>
-                                <span style="font-size: 0.7rem; color: var(--success); background: rgba(34, 197, 94, 0.1); padding: 2px 6px; border-radius: 4px;">Sistem Aktif</span>
-                            </div>
-                            <p id="quoteText" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; min-height: 48px;">
-                                "Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."
-                            </p>
-                            <div style="margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); border-top: 1px dashed var(--border); padding-top: 8px; display: flex; justify-content: space-between;">
-                                <span>Penyimpanan Lokal:</span>
-                                <strong style="color: var(--accent);">localStorage OK</strong>
-                            </div>
+                            <h4 style="font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                                <span>📊 Ringkasan Keuangan</span>
+                                <span style="font-size: 0.7rem; color: var(--text-muted);">Batang</span>
+                            </h4>
+                            <canvas id="chartKeuangan" height="150" style="width: 100%;"></canvas>
                         </div>
 
-                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border); text-align: center;">
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                                <span style="font-size: 0.85rem; font-weight: bold; color: var(--accent);">🎮 Mini-Game Admin</span>
-                                <span id="gameScore" style="font-size: 0.75rem; color: var(--warning); font-weight: bold;">Skor: 0</span>
-                            </div>
-                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">
-                                Gerakkan mouse/touch untuk menangkap koin!
-                            </p>
-                            <canvas id="miniGameCanvas" width="280" height="100" style="background: var(--bg-card); border-radius: 4px; border: 1px solid var(--border); cursor: pointer; max-width: 100%;"></canvas>
+                        <!-- Grafik 2: Sebaran Stok Produk -->
+                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
+                            <h4 style="font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                                <span>📦 Distribusi Stok per Kategori</span>
+                                <span style="font-size: 0.7rem; color: var(--text-muted);">Lingkaran</span>
+                            </h4>
+                            <canvas id="chartStok" height="150" style="width: 100%;"></canvas>
                         </div>
-
                     </div>
 
-                    <!-- TAMBAHAN LENGKAP: PENGERTIAN, SEJARAH, DAN FAKTA MENARIK HARDWARE -->
-                    <div style="border-top: 1px solid var(--border); padding-top: 16px;">
-                        <h4 style="color: var(--accent); margin-bottom: 12px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
-                            <span>🖥️</span> Ensiklopedia & Sejarah Hardware Komputer
-                        </h4>
-                        
-                        <div class="comp-card-grid">
-                            
-                            <div class="comp-card">
-                                <div class="comp-title">🧠 CPU (Processor)</div>
-                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
-                                    Otak utama yang mengeksekusi instruksi aritmatika, logika, dan kontrol input/output sistem.
-                                </p>
-                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--accent);">
-                                    <b>📜 Sejarah & Fakta:</b> Processor komersial pertama adalah Intel 4004 (rilis 1971) yang hanya berkecepatan 740 kHz. Hari ini, CPU modern memiliki miliaran transistor dengan kecepatan melebihi 5 GHz!
-                                </div>
+                    <!-- 4. TABEL STOK MENIPIS & PESANAN TERBARU -->
+                    <div class="dashboard-grid-2col">
+                        <!-- Peringatan Stok Menipis -->
+                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
+                            <h4 style="font-size: 0.85rem; color: var(--warning); margin-bottom: 8px;">⚠️ Peringatan Stok Menipis (≤ 5)</h4>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Produk</th>
+                                            <th>Stok</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelStokMenipis"></tbody>
+                                </table>
                             </div>
-
-                            <div class="comp-card">
-                                <div class="comp-title">🎮 GPU (Graphics Card)</div>
-                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
-                                    Sirkuit khusus untuk mempercepat pemrosesan komputasi paralel seperti visual 3D, rendering video, dan kecerdasan buatan.
-                                </p>
-                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--purple);">
-                                    <b>📜 Sejarah & Fakta:</b> Istilah GPU dipopulerkan oleh NVIDIA pada tahun 1999 saat merilis GeForce 256. Dahulu kartu grafis hanya merender piksel 2D sederhana tanpa pemrosesan pencahayaan 3D.
-                                </div>
-                            </div>
-
-                            <div class="comp-card">
-                                <div class="comp-title">⚡ RAM (Random Access Memory)</div>
-                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
-                                    Memori acak berkecepatan sangat tinggi yang menyimpan data sementara saat aplikasi atau sistem operasi sedang berjalan.
-                                </p>
-                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--success);">
-                                    <b>📜 Sejarah & Fakta:</b> RAM bersifat <i>volatile</i> (data hilang jika listrik mati). Komputer Apollo 11 yang mendarat di Bulan pada tahun 1969 hanya bermemori RAM sekitar 4 Kilobyte!
-                                </div>
-                            </div>
-
-                            <div class="comp-card">
-                                <div class="comp-title">💾 Storage (SSD / HDD)</div>
-                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
-                                    Media penyimpanan permanen (non-volatile) untuk menyimpan dokumen, game, dan sistem operasi.
-                                </p>
-                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--warning);">
-                                    <b>📜 Sejarah & Fakta:</b> Hard Disk pertama (IBM 305 RAMAC tahun 1956) berukuran sebesar 2 lemari es besar dan hanya menampung 5 MB data. SSD modern kini mampu menampung Terabyte dalam ukuran sebesar jari tangan.
-                                </div>
-                            </div>
-
-                            <div class="comp-card">
-                                <div class="comp-title">🔌 Motherboard (Mainboard)</div>
-                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
-                                    Papan sirkuit cetak utama yang menghubungkan dan memungkinkan seluruh komponen hardware berkomunikasi satu sama lain.
-                                </p>
-                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--accent);">
-                                    <b>📜 Sejarah & Fakta:</b> Sebelum motherboard diciptakan pada akhir 1970-an, komponen komputer disambung menggunakan kabel individual yang rumit dan rentan korsleting.
-                                </div>
-                            </div>
-
-                            <div class="comp-card">
-                                <div class="comp-title">🔋 PSU (Power Supply Unit)</div>
-                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
-                                    Pengubah arus listrik bolak-balik (AC) dari colokan PLN menjadi arus searah (DC) dengan voltase stabil untuk hardware.
-                                </p>
-                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--danger);">
-                                    <b>📜 Sejarah & Fakta:</b> Sertifikasi efisiensi daya "80 Plus" diperkenalkan pada tahun 2004 untuk memastikan PSU tidak terbuang menjadi panas lebih dari 20% daya masuknya.
-                                </div>
-                            </div>
-
                         </div>
+
+                        <!-- Pratinjau Pesanan Terbaru -->
+                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
+                            <h4 style="font-size: 0.85rem; color: var(--success); margin-bottom: 8px;">🛒 Pesanan Masuk Terbaru</h4>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>Total</th>
+                                            <th>Metode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelPesananRingkas"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TIPS PENGELOLAAN TOKO -->
+                    <div style="margin-top: 16px; background: var(--bg-main); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 0.8rem; font-weight: bold; color: var(--accent);">💡 Catatan Pengelolaan</span>
+                            <span style="font-size: 0.7rem; color: var(--success);">Sistem Normal</span>
+                        </div>
+                        <p id="quoteText" style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+                            "Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."
+                        </p>
                     </div>
 
                 </div>
@@ -446,6 +413,7 @@
                 document.querySelectorAll(`.nav-link[href="#${targetId}"]`).forEach(l => l.classList.add('active'));
                 
                 sidebar.classList.remove('open');
+                if(targetId === 'dashboard-section') updateDashboardElements();
                 if(targetId === 'laporan-section') renderKeuangan();
             });
         });
@@ -457,9 +425,122 @@
             window.location.href = 'index.html';
         });
 
-        function updateWidget() {
+        /* --- LOGIKA UPDATE GRAFIK & WIDGET UTAMA --- */
+        function updateDashboardElements() {
             document.getElementById('dashTotalBarang').textContent = dataStok.length;
             document.getElementById('dashTotalPesanan').textContent = dataPesanan.length;
+
+            renderCharts();
+            renderRingkasanTables();
+        }
+
+        function renderCharts() {
+            // 1. Chart Keuangan (Bar Chart)
+            const cKeu = document.getElementById('chartKeuangan');
+            if (cKeu) {
+                const ctx = cKeu.getContext('2d');
+                ctx.clearRect(0, 0, cKeu.width, cKeu.height);
+
+                let totalMasuk = dataKeuangan.reduce((a, b) => a + (b.pendapatan || 0), 0);
+                let totalKeluar = dataKeuangan.reduce((a, b) => a + (b.pengeluaran || 0), 0);
+                let laba = totalMasuk - totalKeluar;
+
+                const maxVal = Math.max(totalMasuk, totalKeluar, Math.abs(laba), 100000);
+                
+                const drawBar = (x, val, color, label) => {
+                    const barHeight = Math.max((Math.abs(val) / maxVal) * 90, 5);
+                    const y = 120 - barHeight;
+                    
+                    ctx.fillStyle = color;
+                    ctx.fillRect(x, y, 40, barHeight);
+
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.font = '10px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(label, x + 20, 140);
+                };
+
+                drawBar(30, totalMasuk, '#22c55e', 'Masuk');
+                drawBar(110, totalKeluar, '#ef4444', 'Keluar');
+                drawBar(190, laba, laba >= 0 ? '#38bdf8' : '#f59e0b', 'Laba');
+            }
+
+            // 2. Chart Stok per Kategori (Donut/Pie Chart)
+            const cStok = document.getElementById('chartStok');
+            if (cStok) {
+                const ctx = cStok.getContext('2d');
+                ctx.clearRect(0, 0, cStok.width, cStok.height);
+
+                const katCount = {};
+                dataStok.forEach(item => {
+                    katCount[item.kategori] = (katCount[item.kategori] || 0) + item.stok;
+                });
+
+                const categories = Object.keys(katCount);
+                const totalStokBarang = Object.values(katCount).reduce((a, b) => a + b, 0);
+
+                if (totalStokBarang === 0) {
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.font = '12px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Belum ada data stok', cStok.width / 2, cStok.height / 2);
+                    return;
+                }
+
+                const colors = ['#38bdf8', '#22c55e', '#a855f7', '#f59e0b', '#ef4444', '#64748b'];
+                let startAngle = 0;
+
+                categories.forEach((kat, i) => {
+                    const sliceAngle = (katCount[kat] / totalStokBarang) * 2 * Math.PI;
+                    
+                    ctx.beginPath();
+                    ctx.arc(80, 75, 50, startAngle, startAngle + sliceAngle);
+                    ctx.lineTo(80, 75);
+                    ctx.fillStyle = colors[i % colors.length];
+                    ctx.fill();
+
+                    // Legend
+                    ctx.fillRect(150, 20 + (i * 20), 10, 10);
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.font = '10px sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`${kat} (${katCount[kat]})`, 168, 28 + (i * 20));
+
+                    startAngle += sliceAngle;
+                });
+            }
+        }
+
+        function renderRingkasanTables() {
+            // Table Stok Menipis
+            const tbodyStok = document.getElementById('tabelStokMenipis');
+            const stokSedikit = dataStok.filter(item => item.stok <= 5);
+            
+            if (stokSedikit.length === 0) {
+                tbodyStok.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-muted);">Semua stok aman (>5)</td></tr>';
+            } else {
+                tbodyStok.innerHTML = stokSedikit.map(s => `
+                    <tr>
+                        <td>${s.nama}</td>
+                        <td style="color: var(--danger); font-weight: bold;">${s.stok}</td>
+                        <td><span style="color: var(--danger); font-size: 0.7rem;">Restok!</span></td>
+                    </tr>
+                `).join('');
+            }
+
+            // Table Pesanan Ringkas
+            const tbodyPsn = document.getElementById('tabelPesananRingkas');
+            if (dataPesanan.length === 0) {
+                tbodyPsn.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-muted);">Belum ada pesanan</td></tr>';
+            } else {
+                tbodyPsn.innerHTML = dataPesanan.slice(-3).reverse().map(p => `
+                    <tr>
+                        <td>${p.nama}</td>
+                        <td style="color: var(--success);">Rp ${p.total.toLocaleString('id-ID')}</td>
+                        <td>${p.metode}</td>
+                    </tr>
+                `).join('');
+            }
         }
 
         /* --- STOK BARANG --- */
@@ -504,7 +585,7 @@
 
         function renderStok() {
             const tbody = document.getElementById('tabelStok');
-            updateWidget();
+            updateDashboardElements();
 
             if (dataStok.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color: var(--text-muted);">Belum ada stok barang.</td></tr>';
@@ -568,6 +649,7 @@
             document.getElementById('lapKet').value = '';
 
             renderKeuangan();
+            updateDashboardElements();
             alert('Catatan keuangan berhasil disimpan!');
         });
 
@@ -601,7 +683,7 @@
 
             const labaBersihTotal = totPendapatan - totPengeluaran;
             document.getElementById('rekapPendapatan').textContent = `Rp ${totPendapatan.toLocaleString('id-ID')}`;
-            document.getElementById('rekapPengeluaran').textContent = `Rp ${totPengeluaran.toLocaleString('id-ID')}`;
+            document.getElementById('rekapPengeluaran').textContent = `Rp ${totPendapatan.toLocaleString('id-ID')}`;
             document.getElementById('rekapLaba').textContent = `Rp ${labaBersihTotal.toLocaleString('id-ID')}`;
         }
 
@@ -610,6 +692,7 @@
                 dataKeuangan.splice(index, 1);
                 localStorage.setItem('tp_keuangan', JSON.stringify(dataKeuangan));
                 renderKeuangan();
+                updateDashboardElements();
             }
         }
 
@@ -618,6 +701,7 @@
                 dataKeuangan = [];
                 localStorage.removeItem('tp_keuangan');
                 renderKeuangan();
+                updateDashboardElements();
                 alert('Laporan keuangan berhasil di-reset!');
             }
         });
@@ -642,7 +726,7 @@
             `).join('');
         }
 
-        /* --- TIPS DINAMIS & MINI GAME --- */
+        // Tips Rotasi
         const quotes = [
             '"Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."',
             '"Catat setiap pengeluaran sekecil apa pun untuk menjaga akurasi laporan laba/rugi toko."',
@@ -656,58 +740,10 @@
             if (qEl) qEl.textContent = quotes[quoteIdx];
         }, 6000);
 
-        const canvas = document.getElementById('miniGameCanvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            let score = 0;
-            let playerX = canvas.width / 2;
-            let coin = { x: Math.random() * (canvas.width - 20) + 10, y: 0, speed: 2 };
-
-            canvas.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                playerX = e.clientX - rect.left;
-            });
-
-            canvas.addEventListener('touchmove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                if (e.touches[0]) playerX = e.touches[0].clientX - rect.left;
-            });
-
-            function updateGame() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                ctx.fillStyle = '#38bdf8';
-                ctx.fillRect(playerX - 20, canvas.height - 12, 40, 8);
-
-                ctx.fillStyle = '#f59e0b';
-                ctx.beginPath();
-                ctx.arc(coin.x, coin.y, 6, 0, Math.PI * 2);
-                ctx.fill();
-
-                coin.y += coin.speed;
-
-                if (coin.y >= canvas.height - 12 && coin.x >= playerX - 25 && coin.x <= playerX + 25) {
-                    score += 10;
-                    document.getElementById('gameScore').textContent = 'Skor: ' + score;
-                    coin.y = 0;
-                    coin.x = Math.random() * (canvas.width - 20) + 10;
-                    coin.speed = Math.min(coin.speed + 0.2, 5);
-                }
-
-                if (coin.y > canvas.height) {
-                    coin.y = 0;
-                    coin.x = Math.random() * (canvas.width - 20) + 10;
-                    coin.speed = 2;
-                }
-
-                requestAnimationFrame(updateGame);
-            }
-            updateGame();
-        }
-
         renderStok();
         renderPesanan();
         renderKeuangan();
+        updateDashboardElements();
     </script>
 </body>
 </html>
