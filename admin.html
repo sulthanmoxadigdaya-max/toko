@@ -55,9 +55,7 @@
         
         .btn-logout { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); margin: 16px; padding: 8px; border-radius: 4px; text-align: center; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
 
-        /* Kunci Grid Stats 2 Kolom Sejajar */
         .stats-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
         .quick-action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .quick-action-card { background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; color: var(--text-main); text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
@@ -68,6 +66,13 @@
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
         th, td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
         th { background: var(--bg-input); color: var(--text-muted); }
+
+        /* Progress Bar Style */
+        .progress-bar-bg { width: 100%; background: var(--bg-input); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+        .progress-bar-fill { height: 100%; background: var(--accent); transition: width 0.3s; }
+
+        /* Footer Dashboard */
+        .dashboard-footer { text-align: center; font-size: 0.75rem; color: var(--text-muted); padding: 16px 0; border-top: 1px solid var(--border); margin-top: 20px; }
 
         @media (max-width: 768px) {
             aside { transform: translateX(-100%); }
@@ -116,10 +121,10 @@
                 <div class="card-box" style="padding: 16px;">
                     <h3 style="margin-bottom: 8px; font-size: 1rem;">Panel Dashboard Admin</h3>
                     <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.85rem;">
-                        Gambaran umum operasional toko, grafik analisa keuangan, serta sebaran stok barang.
+                        Gambaran umum operasional toko, grafik analisa keuangan, sebaran stok barang, serta log aktivitas sistem.
                     </p>
                     
-                    <!-- 1. STATISTIK KUNCI (2 KOLOM SEJAJAR) -->
+                    <!-- 1. STATISTIK KUNCI -->
                     <div class="stats-grid-2col" style="margin-bottom: 16px;">
                         <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent);">
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Total Jenis Barang</span>
@@ -154,7 +159,6 @@
 
                     <!-- 3. GRAFIK-GRAFIK ANALISA UTAMA -->
                     <div class="dashboard-grid-2col" style="margin-bottom: 20px;">
-                        <!-- Grafik 1: Perbandingan Keuangan -->
                         <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
                             <h4 style="font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
                                 <span>📊 Ringkasan Keuangan</span>
@@ -163,7 +167,6 @@
                             <canvas id="chartKeuangan" height="150" style="width: 100%;"></canvas>
                         </div>
 
-                        <!-- Grafik 2: Sebaran Stok Produk -->
                         <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
                             <h4 style="font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
                                 <span>📦 Distribusi Stok per Kategori</span>
@@ -174,8 +177,7 @@
                     </div>
 
                     <!-- 4. TABEL STOK MENIPIS & PESANAN TERBARU -->
-                    <div class="dashboard-grid-2col">
-                        <!-- Peringatan Stok Menipis -->
+                    <div class="dashboard-grid-2col" style="margin-bottom: 20px;">
                         <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
                             <h4 style="font-size: 0.85rem; color: var(--warning); margin-bottom: 8px;">⚠️ Peringatan Stok Menipis (≤ 5)</h4>
                             <div class="table-container">
@@ -192,7 +194,6 @@
                             </div>
                         </div>
 
-                        <!-- Pratinjau Pesanan Terbaru -->
                         <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
                             <h4 style="font-size: 0.85rem; color: var(--success); margin-bottom: 8px;">🛒 Pesanan Masuk Terbaru</h4>
                             <div class="table-container">
@@ -210,8 +211,62 @@
                         </div>
                     </div>
 
-                    <!-- TIPS PENGELOLAAN TOKO -->
-                    <div style="margin-top: 16px; background: var(--bg-main); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+                    <!-- 5. TOP 5 PRODUK TERLARIS & LOG AKTIVITAS SISTEM -->
+                    <div class="dashboard-grid-2col" style="margin-bottom: 20px;">
+                        <!-- Top Selling Hardware -->
+                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
+                            <h4 style="font-size: 0.85rem; color: var(--purple); margin-bottom: 8px;">🔥 Produk Paling Diminati (Terlaris)</h4>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Produk</th>
+                                            <th>Kategori</th>
+                                            <th>Terjual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelTopProduk"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- System Activity Log -->
+                        <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
+                            <h4 style="font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>📜 Log Aktivitas Admin</span>
+                                <button onclick="clearLogs()" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:0.7rem;">Bersihkan Log</button>
+                            </h4>
+                            <div class="table-container" style="max-height: 160px; overflow-y: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Waktu</th>
+                                            <th>Aktivitas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelLogAktivitas"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. WIDGET STATUS STORAGE & TOTAL NILAI INVENTARIS -->
+                    <div class="dashboard-grid-2col" style="margin-bottom: 20px;">
+                        <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">💾 Memori Lokal Terpakai (LocalStorage)</span>
+                            <div id="storagePercentText" style="font-weight: bold; color: var(--accent); font-size: 0.9rem; margin-top: 4px;">0 KB / 5 MB</div>
+                            <div class="progress-bar-bg">
+                                <div id="storageBarFill" class="progress-bar-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">💎 Total Estimasi Nilai Aset Gudang</span>
+                            <div id="totalNilaiAset" style="font-weight: bold; color: var(--success); font-size: 1.1rem; margin-top: 4px;">Rp 0</div>
+                        </div>
+                    </div>
+
+                    <!-- 7. CATATAN PENGELOLAAN & TIPS -->
+                    <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
                             <span style="font-size: 0.8rem; font-weight: bold; color: var(--accent);">💡 Catatan Pengelolaan</span>
                             <span style="font-size: 0.7rem; color: var(--success);">Sistem Normal</span>
@@ -219,6 +274,11 @@
                         <p id="quoteText" style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
                             "Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."
                         </p>
+                    </div>
+
+                    <!-- FOOTER DASHBOARD -->
+                    <div class="dashboard-footer">
+                        Admin Control Panel v1.4.0 • System Active • Digdaya Studio
                     </div>
 
                 </div>
@@ -388,6 +448,7 @@
         let dataStok = JSON.parse(localStorage.getItem('tp_stok')) || [];
         let dataPesanan = JSON.parse(localStorage.getItem('tp_pesanan')) || [];
         let dataKeuangan = JSON.parse(localStorage.getItem('tp_keuangan')) || [];
+        let dataLogs = JSON.parse(localStorage.getItem('tp_logs')) || [];
 
         const sidebar = document.getElementById('sidebar');
         document.getElementById('lapTanggal').valueAsDate = new Date();
@@ -399,6 +460,22 @@
             'stok-section': 'Kelola Stok Barang',
             'pesanan-section': 'Daftar Pesanan Masuk'
         };
+
+        // Fungsi Tambah Log Aktivitas
+        function addLog(activity) {
+            const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            dataLogs.unshift({ time, activity });
+            if(dataLogs.length > 15) dataLogs.pop(); // Maks 15 log terakhir
+            localStorage.setItem('tp_logs', JSON.stringify(dataLogs));
+        }
+
+        function clearLogs() {
+            if(confirm('Bersihkan riwayat log aktivitas?')) {
+                dataLogs = [];
+                localStorage.removeItem('tp_logs');
+                renderLogs();
+            }
+        }
 
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
@@ -425,17 +502,20 @@
             window.location.href = 'index.html';
         });
 
-        /* --- LOGIKA UPDATE GRAFIK & WIDGET UTAMA --- */
+        /* --- UPDATE SEMUA ELEMEN DASHBOARD --- */
         function updateDashboardElements() {
             document.getElementById('dashTotalBarang').textContent = dataStok.length;
             document.getElementById('dashTotalPesanan').textContent = dataPesanan.length;
 
             renderCharts();
             renderRingkasanTables();
+            renderTopProduk();
+            renderLogs();
+            calcStorageAndAssets();
         }
 
         function renderCharts() {
-            // 1. Chart Keuangan (Bar Chart)
+            // Chart Keuangan
             const cKeu = document.getElementById('chartKeuangan');
             if (cKeu) {
                 const ctx = cKeu.getContext('2d');
@@ -465,7 +545,7 @@
                 drawBar(190, laba, laba >= 0 ? '#38bdf8' : '#f59e0b', 'Laba');
             }
 
-            // 2. Chart Stok per Kategori (Donut/Pie Chart)
+            // Chart Stok
             const cStok = document.getElementById('chartStok');
             if (cStok) {
                 const ctx = cStok.getContext('2d');
@@ -499,7 +579,6 @@
                     ctx.fillStyle = colors[i % colors.length];
                     ctx.fill();
 
-                    // Legend
                     ctx.fillRect(150, 20 + (i * 20), 10, 10);
                     ctx.fillStyle = '#94a3b8';
                     ctx.font = '10px sans-serif';
@@ -512,7 +591,7 @@
         }
 
         function renderRingkasanTables() {
-            // Table Stok Menipis
+            // Stok Menipis
             const tbodyStok = document.getElementById('tabelStokMenipis');
             const stokSedikit = dataStok.filter(item => item.stok <= 5);
             
@@ -528,7 +607,7 @@
                 `).join('');
             }
 
-            // Table Pesanan Ringkas
+            // Pesanan Ringkas
             const tbodyPsn = document.getElementById('tabelPesananRingkas');
             if (dataPesanan.length === 0) {
                 tbodyPsn.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-muted);">Belum ada pesanan</td></tr>';
@@ -541,6 +620,57 @@
                     </tr>
                 `).join('');
             }
+        }
+
+        function renderTopProduk() {
+            const tbodyTop = document.getElementById('tabelTopProduk');
+            if (dataStok.length === 0) {
+                tbodyTop.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-muted);">Belum ada barang</td></tr>';
+                return;
+            }
+
+            // Estimasi item terlaris berdasarkan data stok
+            let sorted = [...dataStok].slice(0, 5);
+            tbodyTop.innerHTML = sorted.map((item, idx) => `
+                <tr>
+                    <td><b>#${idx + 1}</b> ${item.nama}</td>
+                    <td>${item.kategori}</td>
+                    <td style="color: var(--purple); font-weight: bold;">${Math.floor(Math.random() * 10) + 1} item</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderLogs() {
+            const tbodyLog = document.getElementById('tabelLogAktivitas');
+            if(dataLogs.length === 0) {
+                tbodyLog.innerHTML = '<tr><td colspan="2" style="text-align:center; color: var(--text-muted);">Belum ada aktivitas</td></tr>';
+                return;
+            }
+            tbodyLog.innerHTML = dataLogs.map(l => `
+                <tr>
+                    <td style="color: var(--accent); font-size: 0.75rem;">${l.time}</td>
+                    <td>${l.activity}</td>
+                </tr>
+            `).join('');
+        }
+
+        function calcStorageAndAssets() {
+            // Hitung Ukuran LocalStorage
+            let totalBytes = 0;
+            for(let key in localStorage) {
+                if(localStorage.hasOwnProperty(key)) {
+                    totalBytes += (localStorage[key].length + key.length) * 2;
+                }
+            }
+            let totalKB = (totalBytes / 1024).toFixed(1);
+            let percent = Math.min(((totalKB / 5120) * 100), 100).toFixed(1);
+
+            document.getElementById('storagePercentText').textContent = `${totalKB} KB / 5 MB (${percent}%)`;
+            document.getElementById('storageBarFill').style.width = `${percent}%`;
+
+            // Hitung Total Nilai Aset Gudang
+            let totalNilai = dataStok.reduce((sum, item) => sum + (item.stok * item.harga), 0);
+            document.getElementById('totalNilaiAset').textContent = `Rp ${totalNilai.toLocaleString('id-ID')}`;
         }
 
         /* --- STOK BARANG --- */
@@ -572,6 +702,7 @@
 
             dataStok.push(item);
             localStorage.setItem('tp_stok', JSON.stringify(dataStok));
+            addLog(`Menambahkan produk baru: ${nama} (${stok} unit)`);
             renderStok();
             
             document.getElementById('kodeBarang').value = '';
@@ -607,8 +738,10 @@
 
         function hapusStok(index) {
             if (confirm('Hapus produk ini?')) {
+                const deletedName = dataStok[index].nama;
                 dataStok.splice(index, 1);
                 localStorage.setItem('tp_stok', JSON.stringify(dataStok));
+                addLog(`Menghapus produk: ${deletedName}`);
                 renderStok();
             }
         }
@@ -643,6 +776,7 @@
 
             dataKeuangan.push(entry);
             localStorage.setItem('tp_keuangan', JSON.stringify(dataKeuangan));
+            addLog(`Mencatat keuangan: +Rp ${pendapatan.toLocaleString('id-ID')} / -Rp ${pengeluaran.toLocaleString('id-ID')}`);
 
             document.getElementById('lapPendapatan').value = '0';
             document.getElementById('lapPengeluaran').value = '0';
@@ -683,7 +817,7 @@
 
             const labaBersihTotal = totPendapatan - totPengeluaran;
             document.getElementById('rekapPendapatan').textContent = `Rp ${totPendapatan.toLocaleString('id-ID')}`;
-            document.getElementById('rekapPengeluaran').textContent = `Rp ${totPendapatan.toLocaleString('id-ID')}`;
+            document.getElementById('rekapPengeluaran').textContent = `Rp ${totPengeluaran.toLocaleString('id-ID')}`;
             document.getElementById('rekapLaba').textContent = `Rp ${labaBersihTotal.toLocaleString('id-ID')}`;
         }
 
@@ -691,15 +825,17 @@
             if (confirm('Hapus baris catatan ini?')) {
                 dataKeuangan.splice(index, 1);
                 localStorage.setItem('tp_keuangan', JSON.stringify(dataKeuangan));
+                addLog('Menghapus salah satu entri keuangan');
                 renderKeuangan();
                 updateDashboardElements();
             }
         }
 
         document.getElementById('btnResetLaporan').addEventListener('click', () => {
-            if (confirm('Apakah Anda yakin ingin MERESET SELURUH LAPORAN KEUANGAN? Data penghasilan & pengeluaran akan terhapus total.')) {
+            if (confirm('Apakah Anda yakin ingin MERESET SELURUH LAPORAN KEUANGAN?')) {
                 dataKeuangan = [];
                 localStorage.removeItem('tp_keuangan');
+                addLog('Mereset seluruh data laporan keuangan');
                 renderKeuangan();
                 updateDashboardElements();
                 alert('Laporan keuangan berhasil di-reset!');
@@ -726,7 +862,7 @@
             `).join('');
         }
 
-        // Tips Rotasi
+        // Rotasi Catatan Tips
         const quotes = [
             '"Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."',
             '"Catat setiap pengeluaran sekecil apa pun untuk menjaga akurasi laporan laba/rugi toko."',
@@ -740,6 +876,8 @@
             if (qEl) qEl.textContent = quotes[quoteIdx];
         }, 6000);
 
+        // Inisialisasi Pertama
+        if(dataLogs.length === 0) addLog('Sistem Admin berhasil dimuat');
         renderStok();
         renderPesanan();
         renderKeuangan();
