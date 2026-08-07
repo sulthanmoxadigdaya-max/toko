@@ -16,6 +16,7 @@
             --danger: #ef4444;
             --success: #22c55e;
             --warning: #f59e0b;
+            --purple: #a855f7;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
@@ -54,9 +55,16 @@
         
         .btn-logout { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); margin: 16px; padding: 8px; border-radius: 4px; text-align: center; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
 
+        /* Grid Statistik Kunci Bersebelahan (Selalu 2 Kolom) */
+        .stats-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
         .quick-action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .quick-action-card { background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 10px 6px; text-align: center; color: var(--text-main); text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+
+        .comp-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+        .comp-card { background: var(--bg-main); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+        .comp-title { font-size: 0.85rem; font-weight: bold; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
 
         .table-container { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
@@ -74,7 +82,6 @@
 <body>
 
     <script>
-        // Cek Sesi Admin - Jika belum login, dialihkan kembali ke Halaman Utama / Store (index.html)
         if (localStorage.getItem('tp_admin_session') !== 'true') {
             alert('Akses Ditolak! Anda harus login sebagai Admin.');
             window.location.href = 'index.html';
@@ -106,15 +113,16 @@
                 <span style="font-size: 0.75rem; color: var(--warning); background: rgba(245, 158, 11, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--warning);">🔒 Admin Mode</span>
             </header>
 
-            <!-- SECTION DASHBOARD -->
+            <!-- SECTION DASHBOARD MENU UTAMA -->
             <section id="dashboard-section" class="content-section">
                 <div class="card-box" style="padding: 16px;">
                     <h3 style="margin-bottom: 8px; font-size: 1rem;">Panel Dashboard Admin</h3>
                     <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.85rem;">
-                        Kelola inventaris dan catat laporan pembukuan toko Anda secara real-time.
+                        Kelola inventaris, catat laporan pembukuan toko, dan pelajari seluk-beluk komponen komputer.
                     </p>
                     
-                    <div class="form-grid" style="margin-bottom: 16px;">
+                    <!-- DUA KARTU STATISTIK: SELALU BERSEBELAHAN DI HP DAN DESKTOP -->
+                    <div class="stats-grid-2col" style="margin-bottom: 16px;">
                         <div style="background: var(--bg-main); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent);">
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Total Jenis Barang</span>
                             <div id="dashTotalBarang" style="font-weight: bold; color: var(--accent); font-size: 1.3rem; margin-top: 2px;">0</div>
@@ -145,10 +153,9 @@
                         </a>
                     </div>
 
-                    <!-- ELEMEN TAMBAHAN BAGIAN BAWAH DASHBOARD -->
-                    <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">
+                    <!-- AREA TIPS & MINI GAME -->
+                    <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 16px; margin-bottom: 20px;">
                         
-                        <!-- Widget 1: Tips Pengelolaan Toko Dinamis -->
                         <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border);">
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                                 <span style="font-size: 0.85rem; font-weight: bold; color: var(--accent);">💡 Tips Pengelolaan Toko</span>
@@ -163,7 +170,6 @@
                             </div>
                         </div>
 
-                        <!-- Widget 2: Mini-Game Canvas Interaktif -->
                         <div style="background: var(--bg-main); padding: 14px; border-radius: 6px; border: 1px solid var(--border); text-align: center;">
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                                 <span style="font-size: 0.85rem; font-weight: bold; color: var(--accent);">🎮 Mini-Game Admin</span>
@@ -176,6 +182,78 @@
                         </div>
 
                     </div>
+
+                    <!-- TAMBAHAN LENGKAP: PENGERTIAN, SEJARAH, DAN FAKTA MENARIK HARDWARE -->
+                    <div style="border-top: 1px solid var(--border); padding-top: 16px;">
+                        <h4 style="color: var(--accent); margin-bottom: 12px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+                            <span>🖥️</span> Ensiklopedia & Sejarah Hardware Komputer
+                        </h4>
+                        
+                        <div class="comp-card-grid">
+                            
+                            <div class="comp-card">
+                                <div class="comp-title">🧠 CPU (Processor)</div>
+                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
+                                    Otak utama yang mengeksekusi instruksi aritmatika, logika, dan kontrol input/output sistem.
+                                </p>
+                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--accent);">
+                                    <b>📜 Sejarah & Fakta:</b> Processor komersial pertama adalah Intel 4004 (rilis 1971) yang hanya berkecepatan 740 kHz. Hari ini, CPU modern memiliki miliaran transistor dengan kecepatan melebihi 5 GHz!
+                                </div>
+                            </div>
+
+                            <div class="comp-card">
+                                <div class="comp-title">🎮 GPU (Graphics Card)</div>
+                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
+                                    Sirkuit khusus untuk mempercepat pemrosesan komputasi paralel seperti visual 3D, rendering video, dan kecerdasan buatan.
+                                </p>
+                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--purple);">
+                                    <b>📜 Sejarah & Fakta:</b> Istilah GPU dipopulerkan oleh NVIDIA pada tahun 1999 saat merilis GeForce 256. Dahulu kartu grafis hanya merender piksel 2D sederhana tanpa pemrosesan pencahayaan 3D.
+                                </div>
+                            </div>
+
+                            <div class="comp-card">
+                                <div class="comp-title">⚡ RAM (Random Access Memory)</div>
+                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
+                                    Memori acak berkecepatan sangat tinggi yang menyimpan data sementara saat aplikasi atau sistem operasi sedang berjalan.
+                                </p>
+                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--success);">
+                                    <b>📜 Sejarah & Fakta:</b> RAM bersifat <i>volatile</i> (data hilang jika listrik mati). Komputer Apollo 11 yang mendarat di Bulan pada tahun 1969 hanya bermemori RAM sekitar 4 Kilobyte!
+                                </div>
+                            </div>
+
+                            <div class="comp-card">
+                                <div class="comp-title">💾 Storage (SSD / HDD)</div>
+                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
+                                    Media penyimpanan permanen (non-volatile) untuk menyimpan dokumen, game, dan sistem operasi.
+                                </p>
+                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--warning);">
+                                    <b>📜 Sejarah & Fakta:</b> Hard Disk pertama (IBM 305 RAMAC tahun 1956) berukuran sebesar 2 lemari es besar dan hanya menampung 5 MB data. SSD modern kini mampu menampung Terabyte dalam ukuran sebesar jari tangan.
+                                </div>
+                            </div>
+
+                            <div class="comp-card">
+                                <div class="comp-title">🔌 Motherboard (Mainboard)</div>
+                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
+                                    Papan sirkuit cetak utama yang menghubungkan dan memungkinkan seluruh komponen hardware berkomunikasi satu sama lain.
+                                </p>
+                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--accent);">
+                                    <b>📜 Sejarah & Fakta:</b> Sebelum motherboard diciptakan pada akhir 1970-an, komponen komputer disambung menggunakan kabel individual yang rumit dan rentan korsleting.
+                                </div>
+                            </div>
+
+                            <div class="comp-card">
+                                <div class="comp-title">🔋 PSU (Power Supply Unit)</div>
+                                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">
+                                    Pengubah arus listrik bolak-balik (AC) dari colokan PLN menjadi arus searah (DC) dengan voltase stabil untuk hardware.
+                                </p>
+                                <div style="background: var(--bg-card); padding: 8px; border-radius: 4px; font-size: 0.73rem; border-left: 2px solid var(--danger);">
+                                    <b>📜 Sejarah & Fakta:</b> Sertifikasi efisiensi daya "80 Plus" diperkenalkan pada tahun 2004 untuk memastikan PSU tidak terbuang menjadi panas lebih dari 20% daya masuknya.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -345,8 +423,6 @@
         let dataKeuangan = JSON.parse(localStorage.getItem('tp_keuangan')) || [];
 
         const sidebar = document.getElementById('sidebar');
-
-        // Set tanggal default ke hari ini
         document.getElementById('lapTanggal').valueAsDate = new Date();
 
         const titleMap = {
@@ -376,7 +452,6 @@
 
         document.getElementById('menuToggle').addEventListener('click', () => sidebar.classList.toggle('open'));
 
-        // Logout: Hapus Sesi dan Kembalikan ke Halaman Toko (index.html)
         document.getElementById('btnLogout').addEventListener('click', () => {
             localStorage.removeItem('tp_admin_session');
             window.location.href = 'index.html';
@@ -457,7 +532,7 @@
             }
         }
 
-        /* --- KEUANGAN MANUAL (PENDAPATAN & PENGELUARAN) --- */
+        /* --- KEUANGAN MANUAL --- */
         document.getElementById('btnSimpanKeuangan').addEventListener('click', () => {
             const tglVal = document.getElementById('lapTanggal').value;
             const pendapatan = parseInt(document.getElementById('lapPendapatan').value) || 0;
@@ -567,7 +642,7 @@
             `).join('');
         }
 
-        /* --- LOGIKA TAMBAHAN: TIPS DINAMIS & MINI-GAME --- */
+        /* --- TIPS DINAMIS & MINI GAME --- */
         const quotes = [
             '"Pastikan stok barang berstok rendah selalu diperbarui secara berkala untuk menjaga kepuasan pelanggan."',
             '"Catat setiap pengeluaran sekecil apa pun untuk menjaga akurasi laporan laba/rugi toko."',
@@ -581,7 +656,6 @@
             if (qEl) qEl.textContent = quotes[quoteIdx];
         }, 6000);
 
-        // Logic Mini Game Canvas (Catch the Coin)
         const canvas = document.getElementById('miniGameCanvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
@@ -602,20 +676,16 @@
             function updateGame() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Gambar Paddle Player
                 ctx.fillStyle = '#38bdf8';
                 ctx.fillRect(playerX - 20, canvas.height - 12, 40, 8);
 
-                // Gambar Koin
                 ctx.fillStyle = '#f59e0b';
                 ctx.beginPath();
                 ctx.arc(coin.x, coin.y, 6, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Gerakan Koin
                 coin.y += coin.speed;
 
-                // Cek Tangkapan
                 if (coin.y >= canvas.height - 12 && coin.x >= playerX - 25 && coin.x <= playerX + 25) {
                     score += 10;
                     document.getElementById('gameScore').textContent = 'Skor: ' + score;
@@ -624,7 +694,6 @@
                     coin.speed = Math.min(coin.speed + 0.2, 5);
                 }
 
-                // Reset jika koin jatuh
                 if (coin.y > canvas.height) {
                     coin.y = 0;
                     coin.x = Math.random() * (canvas.width - 20) + 10;
@@ -636,7 +705,6 @@
             updateGame();
         }
 
-        // Initial render
         renderStok();
         renderPesanan();
         renderKeuangan();
